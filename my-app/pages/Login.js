@@ -10,7 +10,6 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const navigator = useNavigation();
 
-  // Retrieve saved credentials on component mount
   useEffect(() => {
     const retrieveCredentials = async () => {
       try {
@@ -21,7 +20,6 @@ export default function Login() {
           setUsername(savedUsername);
           setPassword(savedPassword);
 
-          // Automatically log in if credentials exist
           const user = students.find((s) => s.username === savedUsername);
           if (user && user.password === savedPassword) {
             navigator.navigate("Home");
@@ -47,12 +45,11 @@ export default function Login() {
           return;
         } else {
           if (user.password === password) {
-            // Save credentials to AsyncStorage
             await AsyncStorage.setItem("username", username);
             await AsyncStorage.setItem("password", password);
 
             alert("Login successful");
-            navigator.navigate("Home",{});
+            navigator.navigate("Home", { user: user });
           } else {
             alert("Invalid username or password");
           }
