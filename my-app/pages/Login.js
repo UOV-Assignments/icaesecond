@@ -2,9 +2,11 @@ import { useState } from "react";
 import { StyleSheet, Image, ScrollView, View } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 import { students } from "../assets/data/studentdb";
+import { useNavigation } from "@react-navigation/native";
 export default function Login() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
+  const navigator = useNavigation();
 
   const handleLogin = () => {
     try {
@@ -19,6 +21,7 @@ export default function Login() {
         } else {
           if (user.password === password) {
             alert("Login successful");
+            navigator.navigate("Home");
           } else {
             alert("Invalid username or password");
           }

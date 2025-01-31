@@ -5,6 +5,7 @@ import { PaperProvider } from "react-native-paper";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Login from "./pages/Login";
+import Home from "./pages/Home";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -13,7 +14,7 @@ export default function App() {
       <PaperProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Login"
+            initialRouteName="Home"
             screenOptions={{
               headerStyle: {
                 backgroundColor: "#333",
@@ -34,6 +35,11 @@ export default function App() {
               name="Login"
               component={Login}
               options={{ title: "Login" }}
+            />
+            <Stack.Screen
+              name="Home"
+              component={Home}
+              options={{ title: "Home" }}
             />
           </Stack.Navigator>
         </NavigationContainer>
