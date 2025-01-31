@@ -1,7 +1,11 @@
+import { useState } from "react";
 import { StyleSheet, Image, ScrollView, View } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 
 export default function Login() {
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+
   return (
     <ScrollView>
       <View>
@@ -20,11 +24,13 @@ export default function Login() {
         <TextInput
           mode="outlined"
           label={"username"}
+          value={username}
           style={styles.textInput}
         />
         <TextInput
           mode="outlined"
           label={"password"}
+          value={password}
           style={styles.textInput}
         />
         <Button mode="contained" style={styles.button}>
