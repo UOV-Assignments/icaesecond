@@ -1,13 +1,30 @@
 import { useState } from "react";
 import { StyleSheet, Image, ScrollView, View } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
-
+import { students } from "../assets/data/studentdb";
 export default function Login() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
 
   const handleLogin = () => {
-    console.log(username, password);
+    try {
+      if (!username || !password) {
+        alert("Please fill all fields");
+        return;
+      } else {
+        const user = students.find((s) => s.username === username);
+        if (!user) {
+          alert("Invalid username or password");
+          return;
+        } else {
+          if (user.password === password) {
+            alert("Login successful");
+          } else {
+            alert("Invalid username or password");
+          }
+        }
+      }
+    } catch (error) {}
   };
 
   return (
@@ -37,7 +54,7 @@ export default function Login() {
           label={"password"}
           value={password}
           style={styles.textInput}
-          secureTextEntry = {true}
+          secureTextEntry={true}
           onChangeText={setPassword}
         />
         <Button mode="contained" style={styles.button} onPress={handleLogin}>
