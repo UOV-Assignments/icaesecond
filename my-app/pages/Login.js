@@ -10,29 +10,6 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const navigator = useNavigation();
 
-  useEffect(() => {
-    const retrieveCredentials = async () => {
-      try {
-        const savedUsername = await AsyncStorage.getItem("username");
-        const savedPassword = await AsyncStorage.getItem("password");
-
-        if (savedUsername && savedPassword) {
-          setUsername(savedUsername);
-          setPassword(savedPassword);
-
-          const user = students.find((s) => s.username === savedUsername);
-          if (user && user.password === savedPassword) {
-            navigator.navigate("Home");
-          }
-        }
-      } catch (error) {
-        console.error("Error retrieving credentials:", error);
-      }
-    };
-
-    retrieveCredentials();
-  }, [navigator]);
-
   const handleLogin = async () => {
     try {
       if (!username || !password) {
