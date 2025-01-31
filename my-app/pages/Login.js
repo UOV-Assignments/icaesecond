@@ -6,6 +6,10 @@ export default function Login() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
 
+  const handleLogin = () => {
+    console.log(username, password);
+  };
+
   return (
     <ScrollView>
       <View>
@@ -26,14 +30,17 @@ export default function Login() {
           label={"username"}
           value={username}
           style={styles.textInput}
+          onChangeText={setUsername}
         />
         <TextInput
           mode="outlined"
           label={"password"}
           value={password}
           style={styles.textInput}
+          secureTextEntry = {true}
+          onChangeText={setPassword}
         />
-        <Button mode="contained" style={styles.button}>
+        <Button mode="contained" style={styles.button} onPress={handleLogin}>
           Login
         </Button>
       </View>
