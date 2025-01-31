@@ -14,7 +14,7 @@ export default function App() {
       <PaperProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Home"
+            initialRouteName="Login"
             screenOptions={{
               headerStyle: {
                 backgroundColor: "#333",

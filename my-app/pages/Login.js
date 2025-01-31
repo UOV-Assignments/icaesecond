@@ -1,14 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { StyleSheet, Image, ScrollView, View } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { students } from "../assets/data/studentdb";
 import { useNavigation } from "@react-navigation/native";
+
 export default function Login() {
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigator = useNavigation();
 
-  const handleLogin = () => {
+  // Retrieve saved credentials on component mount
+  useEffect(() => {
+    const retrieveCredentials = async () => {
+      try {
+        const savedUsername = await AsyncStorage.getItem("username");
+        const savedPassword = await AsyncStorage.getItem("password");
+
+        if (savedUsername && savedPassword) {
+          setUsername(savedUsername);
+          setPassword(savedPassword);
+
+          // Automatically log in if credentials exist
+          const user = students.find((s) => s.username === savedUsername);
+          if (user && user.password === savedPassword) {
+            navigator.navigate("Home");
+          }
+        }
+      } catch (error) {
+        console.error("Error retrieving credentials:", error);
+      }
+    };
+
+    retrieveCredentials();
+  }, [navigator]);
+
+  const handleLogin = async () => {
     try {
       if (!username || !password) {
         alert("Please fill all fields");
@@ -20,14 +47,20 @@ export default function Login() {
           return;
         } else {
           if (user.password === password) {
+            // Save credentials to AsyncStorage
+            await AsyncStorage.setItem("username", username);
+            await AsyncStorage.setItem("password", password);
+
             alert("Login successful");
-            navigator.navigate("Home");
+            navigator.navigate("Home",{});
           } else {
             alert("Invalid username or password");
           }
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error saving credentials:", error);
+    }
   };
 
   return (
@@ -98,35 +131,5 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     textAlign: "center",
     marginTop: 20,
-  },
-  eyeIcon: {
-    position: "absolute",
-    right: 57,
-    top: 95,
-    color: "gray",
-  },
-  previewText: {
-    fontSize: 16,
-    marginTop: 10,
-    textAlign: "center",
-  },
-  errorContainer: {
-    backgroundColor: "pink",
-    width: 350,
-    height: 30,
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    alignSelf: "center",
-    marginTop: 10,
-    flexDirection: "row",
-  },
-
-  errorContent: {
-    fontSize: 16,
-  },
-  infoIcon: {
-    fontSize: 18,
-    marginRight: 5,
   },
 });
