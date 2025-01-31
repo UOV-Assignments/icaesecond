@@ -14,13 +14,21 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator
             initialRouteName="Login"
-            screenOptions={
-              (headerStyle = {
-                backgroundColor: "#70116d",
-                headerTitleStyle: { color: "#fff" },
-                headerTitleAlign: "center",
-              })
-            }
+            screenOptions={{
+              headerStyle: {
+                backgroundColor: "#333",
+                elevation: 0,
+                shadowOpacity: 0,
+                borderBottomWidth: 0,
+              },
+              headerTitleStyle: {
+                color: "white",
+                fontSize: 26,
+                fontWeight: "bold",
+                fontFamily: "Poppins_600SemiBold",
+              },
+              headerTitleAlign: "center",
+            }}
           >
             <Stack.Screen
               name="Login"
